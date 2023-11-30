@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="styles.css">
+  <title>Typing Test</title>
+
+  <style>
+    body {
+    font-family: 'Arial', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+  }
+  
+  #app {
+    text-align: center;
+  }
+  
+  textarea {
+    width: 300px;
+    height: 100px;
+    font-size: 16px;
+    margin-top: 10px;
+  }
+  
+  button {
+    margin-top: 10px;
+    padding: 10px;
+    font-size: 16px;
+  }
+  
+
+  .correct {
+    color: green;
+  }
+  
+  .incorrect {
+    color: red;
+  }
+  
+  </style>
+
+
+</head>
+<body>
+  <div id="app">
+    <h1>Typing Test</h1>
+    <p id="quote">Start typing the text below:</p>
+    <p id="sentence"></p>
+    <textarea id="input" placeholder="Type here..."></textarea>
+    <p id="result">Your typing speed: <span id="speed">0</span> WPM</p>
+    <button onclick="startTest()">Start Test</button>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,71 @@
+body{
+    background-color: #eee;
+    font-family: sans-serif;
+    font-size: 1em;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+.main {
+    width: 95%;
+    margin: auto;
+    max-width: 900px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.main-card {
+    padding: 15px;
+    border-radius: 1.25rem;
+    background-color: #fff;
+    border: 1px solid #F2F2F2;
+    box-shadow: 1px 1px 15px 1px rgba(0,0,0,0.1);
+    border-radius: 8px;
+}
+
+
+.result-contents {
+    display: grid;
+    grid-template-columns: calc(90% - 10px) 10%;
+    gap: 10px;
+    align-items: baseline;
+    font-weight: bold;
+}
+.result-contents .result-progress {
+    border-color: #ecca31;
+    padding: 0.25em 0;
+    margin: 0;
+    border-width: 2px;
+    border-bottom-style: dashed;
+    display: flex;
+}
+.result-contents .wpm {
+    text-align: right;
+}
+.result-contents .avatar-container {
+    display: inline-block;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center center;
+    width: 72px;
+    height: 30px;
+}
+.result-progress .name-container {
+    width: auto;
+    display: inline-block;
+    overflow: hidden;
+    text-align: right;
+    white-space: nowrap;
+    max-width: 100px;
+}
+.result-progress .name-container .name {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding-right: 5px;
+    white-space: nowrap;
+}
+.result-progress .name-container .username {
+    margin-right: 5px;
+}
