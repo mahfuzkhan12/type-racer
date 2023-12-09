@@ -11,13 +11,13 @@
 <body>
     
 
-    <div class="main">
+    <div class="main game-view">
         <div class="main-card">
 
             <div class="result">
                 <div class="result-contents">
                     <div class="result-progress">
-                        <div>
+                        <div class="vehicle-container">
                             <div class="name-container">
                                 <div class="name" style="white-space: nowrap;">Mahfuz</div>
                                 <span class="username">(you)</span>
@@ -29,9 +29,37 @@
                 </div>
             </div>
 
+            <div class="input-panel game-input-panel">
+                <div class="text-part">
+                    <div>
+                        <div class="text-container">
+                            <!-- <span unselectable="on" class="typing-cursor typing">W</span><span unselectable="on" class="typing">ell</span><span unselectable="on"> I woke in mid-afternoon 'cause that's when it all hurts the most. I dream I never know anyone at the party and I'm always the host. If dreams are like movies, then memories are films about ghosts. You can never escape, you can only move south down the coast.</span> -->
+                        </div>
+                    </div>
+                </div>
+
+                <div class="">
+                    <input maxlength="15" class="text-input" />
+                </div>
+
+            </div>
+
+
+            <div class="action-buttons">
+                <div></div>
+                <div class="">
+                    <button onclick="startRace()" class="start-race-btn">Start Race</button>
+                </div>
+            </div>
+
+
         </div>
     </div>
 
+
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script src="script.js"></script>
 
 </body>
 </html>
