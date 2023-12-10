@@ -10,67 +10,149 @@
 </head>
 <body>
     
+    <div class="page-loader">
+        <svg class="car" width="102" height="40" xmlns="http://www.w3.org/2000/svg">
+            <g transform="translate(2 1)" stroke="#002742" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round">
+                <path class="car__body" d="M47.293 2.375C52.927.792 54.017.805 54.017.805c2.613-.445 6.838-.337 9.42.237l8.381 1.863c2.59.576 6.164 2.606 7.98 4.531l6.348 6.732 6.245 1.877c3.098.508 5.609 3.431 5.609 6.507v4.206c0 .29-2.536 4.189-5.687 4.189H36.808c-2.655 0-4.34-2.1-3.688-4.67 0 0 3.71-19.944 14.173-23.902zM36.5 15.5h54.01" stroke-width="3"/>
+                <ellipse class="car__wheel--left" stroke-width="3.2" fill="#FFF" cx="83.493" cy="30.25" rx="6.922" ry="6.808"/>
+                <ellipse class="car__wheel--right" stroke-width="3.2" fill="#FFF" cx="46.511" cy="30.25" rx="6.922" ry="6.808"/>
+                <path class="car__line car__line--top" d="M22.5 16.5H2.475" stroke-width="3"/>
+                <path class="car__line car__line--middle" d="M20.5 23.5H.4755" stroke-width="3"/>
+                <path class="car__line car__line--bottom" d="M25.5 9.5h-19" stroke-width="3"/>
+            </g>
+        </svg>
+    </div>
 
-    <div class="main game-view">
-        <div class="main-card">
-
-            <div class="game-timer" style="display: none;">
-                <div class="title">The race is about to start!</div>
-                <div class="time-display">1:30</div>
-            </div>
-
-            <div class="game-starter-timer"></div>
-
-            <div class="result">
-                <div class="result-contents">
-                    <div class="result-progress">
-                        <div class="vehicle-container">
-                            <!-- <div class="name-container">
-                                <div class="name" style="white-space: nowrap;">Mahfuz</div>
-                                <span class="username">(you)</span>
-                            </div> -->
-                            <!-- <div class="avatar-container" style="background-image: url(&quot;https://data.typeracer.com/public/images/avatars/basic-orange.svg&quot;);"></div> -->
-                            <!-- <div class="avatar-container" style="background-image: url('https://data.typeracer.com/public/images/avatars/spring-cherryblossom-free.svg')"></div> -->
-                            <!-- <div class="avatar-container" style="background-image: url('https://data.typeracer.com/public/images/avatars/spring-cherryblossom-drag.svg')"></div> -->
-                        </div>
-                    </div>
-                    <div class="wpm">0 wpm</div>
-                </div>
-            </div>
-
-            <div class="input-panel game-input-panel" style="display: none;">
-                <div class="text-part">
-                    <div>
-                        <div class="text-container">
-                            <!-- <span unselectable="on" class="typing-cursor typing">W</span><span unselectable="on" class="typing">ell</span><span unselectable="on"> I woke in mid-afternoon 'cause that's when it all hurts the most. I dream I never know anyone at the party and I'm always the host. If dreams are like movies, then memories are films about ghosts. You can never escape, you can only move south down the coast.</span> -->
-                        </div>
+    <div class="join-game">
+        <div class="main-card header">
+            <div class="d-flex ai-center jc-between">
+                <div class="header-infos">
+                    <div><span class="card-subtitle">Name:</span> <span class="card-title username">User 001</span></div>
+                    <div class="d-flex ai-center gap-1">
+                        <div><span class="card-subtitle">Vehicle:</span></div> 
+                        <div><img class="header-veh user_vehicle" src="veh_avatars/car-1.svg" /></div>
                     </div>
                 </div>
-
-                <div class="">
-                    <input disabled maxlength="15" class="text-input" />
+                <div class="settings-icon" title="Update Your Info">
+                    <div></div>
                 </div>
-
             </div>
-
-
-            <div class="action-buttons">
+        </div>
+        <div class="main-card bg">
+            <div class="head-part">
+                <div class="logo">
+                    <img src="assets/typer.png" />
+                </div>
                 <div>
-                    <button onclick="endRace()" class="leave-race-btn" style="display: none;">Leave Race</button>
-                </div>
-                <div class="">
-                    <button onclick="startRace()" class="start-race-btn">Start Race</button>
+                    <div class="title">Pro-Typer</div> 
+                    <div>
+                        <div class="sub-title">The Global Typing Competition</div>
+                        <div>Increase your typing speed while racing against others!</div>
+                    </div>
+                    <div class="action-buttons">
+                        <div class="">
+                            <button class="start-race-btn">Join a Race</button>
+                        </div>
+                    </div>
                 </div>
             </div>
+        </div>
+        <div class="join-box-wrappers">
+            <div class="main-card practice-card">
+                <div>
+                    <div class="card-title">Typing Test</div>
+                    <div class="card-subtitle">Improve your typing skills on your own</div>
+                </div>
+                <div class="action-buttons">
+                    <div class="">
+                        <button onclick="startPractice()" class="blue-btn">Practice Yourself</button>
+                    </div>
+                </div>
+            </div>
+            <div class="main-card racetrack-card">
+                <div>
+                    <div class="card-title">Race your friends</div>
+                    <div class="card-subtitle">Create your own racetrack and play with friends</div>
+                </div>
+                <div class="action-buttons">
+                    <div class="">
+                        <button onclick="joinGame()">Create RaceTrack</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="game-view" style="display: none;">
+        <div class="game-wrapper">
+            <div class="main-card">
+
+                <div class="game-timer" style="display: none;">
+                    <div class="title">The race is about to start!</div>
+                    <div class="time-display">1:30</div>
+                </div>
+
+                <div class="game-starter-timer"></div>
+
+                <div class="result">
+                    <div class="result-contents">
+                        <div class="result-progress">
+                            <div class="vehicle-container">
+                                <!-- <div class="name-container">
+                                    <div class="name" style="white-space: nowrap;">Mahfuz</div>
+                                    <span class="username">(you)</span>
+                                </div> -->
+                                <!-- <div class="avatar-container" style="background-image: url(&quot;https://data.typeracer.com/public/images/avatars/basic-orange.svg&quot;);"></div> -->
+                                <!-- <div class="avatar-container" style="background-image: url('https://data.typeracer.com/public/images/avatars/spring-cherryblossom-free.svg')"></div> -->
+                                <!-- <div class="avatar-container" style="background-image: url('https://data.typeracer.com/public/images/avatars/spring-cherryblossom-drag.svg')"></div> -->
+                            </div>
+                        </div>
+                        <div class="wpm">0 wpm</div>
+                    </div>
+                    <!-- <div class="result-contents">
+                        <div class="result-progress">
+                            <div class="vehicle-container">
+                            </div>
+                        </div>
+                        <div class="wpm">0 wpm</div>
+                    </div> -->
+                </div>
+
+                <div class="input-panel game-input-panel" style="display: none;">
+                    <div class="text-part">
+                        <div>
+                            <div class="text-container">
+                                <!-- <span unselectable="on" class="typing-cursor typing">W</span><span unselectable="on" class="typing">ell</span><span unselectable="on"> I woke in mid-afternoon 'cause that's when it all hurts the most. I dream I never know anyone at the party and I'm always the host. If dreams are like movies, then memories are films about ghosts. You can never escape, you can only move south down the coast.</span> -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="">
+                        <input disabled maxlength="15" class="text-input" />
+                    </div>
+
+                </div>
 
 
+                <div class="action-buttons">
+                    <div>
+                        <button onclick="leaveGame()" class="leave-race-btn" style="display: none;">Main Menu(Leave Race)</button>
+                    </div>
+                    <div class="">
+                        <button onclick="startRace()" class="start-race-btn">Join Race</button>
+                    </div>
+                </div>
+
+
+            </div>
         </div>
     </div>
 
 
     <script src="/socket.io/socket.io.js"></script>
-    <script src="socket.js"></script>
     <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script src="js/user_info.js"></script>
+    <script src="socket.js"></script>
     <script src="script.js"></script>
 
 </body>

@@ -1,22 +1,39 @@
 @import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,700;1,100;1,300;1,400;1,700;1,900&family=Open+Sans:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
 
+
+/* global */
 body{
     background-color: #eee;
     font-family: 'Lato', sans-serif;
-    font-size: 1em;
+    font-size: 14px;
+    margin: 0;
+    padding: 0;
 }
 
 * {
     box-sizing: border-box;
 }
-
-.main {
-    width: 95%;
-    margin: auto;
-    max-width: 900px;
-    margin-top: 20px;
-    margin-bottom: 20px;
+img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
 }
+
+.d-flex {
+    display: flex;
+}
+.ai-center {
+    align-items: center;
+}
+.jc-between {
+    justify-content: space-between;
+}
+.gap-1 {
+    gap: 5px;
+}
+/* global */
+
+
 
 .main-card {
     padding: 15px;
@@ -27,8 +44,108 @@ body{
     border-radius: 8px;
     position: relative;
 }
+.main-card .card-title {
+    color: #20588F;
+    font-size: 1.1em;
+    font-weight: 700;
+    padding: 0;
+    margin: 0;
+}
+.main-card .card-subtitle {
+    color: #20588F;
+    font-weight: 400;
+    font-size: 15px;
+    margin: 0;
+    padding-bottom: 10px;
+}
 
+/* join game page */
+.join-game {
+    width: 95%;
+    max-width: 900px;
+    margin: auto;    
+    display: grid;
+    gap: 18px;
+    margin-top: 18px;
+}
+.join-game .main-card.bg{
+    background-image: url('veh_avatars/cars/rock-car-red.svg');
+    background-repeat: no-repeat;
+    background-position: right -10% bottom 5%;
+    background-size: 55%;
+    color: #20588F;
+}
+.join-game .head-part {
+    display: flex;
+    gap: 15px;
+}
+.join-game .head-part .title {
+    font-size: 35px;
+    font-weight: 600;
+}
+.join-game .head-part .logo {
+    width: 70px;
+    height: 70px;
+}
+.join-game .head-part .sub-title {
+    font-size: 18px;
+    font-weight: bold;
+    margin-top: 8px;
+    margin-bottom: 4px;
+}
+.join-box-wrappers {
+    display: grid;
+    grid-template-columns: auto auto;
+    gap: 18px;
+}
+.join-box-wrappers .practice-card {
+    background-image: url('veh_avatars/cars/normal-car-red.svg');
+    background-size: 40%;
+    background-repeat: no-repeat;
+    background-position: right -20% bottom 5%;
+}
+.join-box-wrappers .racetrack-card {
+    background-image: url('assets/multicars-1.svg');
+    background-size: 40%;
+    background-repeat: no-repeat;
+    background-position: right -20% bottom 5%;
+}
+.header-veh {
+    width: 100px;
+}
+.header-infos {
+    display: flex;
+    gap: 30px;
+    align-items: center;
+}
+.header-infos .username {
+    font-size: 18px;
+    color: #3cc1a3;
+}
+.header .settings-icon div {
+    width: 30px;
+    height: 30px;
+    border-radius: 100%;
+    background: url("assets/settings.svg");
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+.header .settings-icon {
+    cursor: pointer;
+    transition: transform 2s ease;
+}
+.header .settings-icon:hover{
+    transform: rotate(360deg);
+}
 
+/* game page */
+.game-wrapper {
+    width: 95%;
+    margin: auto;
+    max-width: 900px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
 
 /* result part */
 .result-contents {
@@ -158,7 +275,9 @@ body{
     font-weight: 700;
     cursor: pointer;
 }
-
+.action-buttons .blue-btn {
+    background-color: #005894;
+}
 
 /* head timer */
 .game-timer {
@@ -202,7 +321,14 @@ body{
     font-weight: bold;
 }
 .game-starter-timer .trafficlight {
+    background: url('/assets/trafficlight.png') -165px 0px no-repeat;
     animation: fade 2s infinite;
+}
+.game-starter-timer .trafficlight.green-light {
+    background-position: -495px 0px;
+}
+.game-starter-timer .trafficlight.yellow-light {
+    background-position: 0px 0px;
 }
 
 @keyframes fade {
@@ -214,5 +340,68 @@ body{
     }
     100% {
       opacity: 1;
+    }
+}
+
+
+
+/* page loader */
+.page-loader {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 9999;
+    background: #eee;
+}
+.car__body {
+    animation: shake 0.2s ease-in-out infinite alternate;
+}
+.car__line {
+    transform-origin: center right;
+    stroke-dasharray: 22;
+    animation: line 0.8s ease-in-out infinite;
+    animation-fill-mode: both;
+}
+.car__line--top {
+    animation-delay: 0s;
+}
+.car__line--middle {
+    animation-delay: 0.2s;
+}
+.car__line--bottom {
+    animation-delay: 0.4s;
+}
+@keyframes shake {
+    0% {
+        transform: translateY(-1%);
+    }
+    100% {
+        transform: translateY(3%);
+    }
+}
+@keyframes line {
+    0% {
+        stroke-dashoffset: 22;
+    }
+    25% {
+        stroke-dashoffset: 22;
+    }
+    50% {
+        stroke-dashoffset: 0;
+    }
+    51% {
+        stroke-dashoffset: 0;
+    }
+    80% {
+        stroke-dashoffset: -22;
+    }
+    100% {
+        stroke-dashoffset: -22;
     }
 }

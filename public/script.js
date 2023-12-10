@@ -28,24 +28,6 @@ var time_left = 90
 var game_started = false
 
 
-// enter game server
-var socket = io.connect("http://localhost:8000/");
-
-// user info
-function randomIDGen(length = 10) {
-    const timestampPart = Date.now().toString(36);
-    const randomPartLength = length - timestampPart.length;
-    const randomPart = Math.random().toString(36).substr(2, randomPartLength);
-
-    let randomString = `${timestampPart}-${randomPart}`;
-    return randomString;
-}
-const user_id = randomIDGen()
-const avatar = `veh_avatars/car-${Math.floor(Math.random() * 7)}.svg`
-const name = "User Name"
-// user info
-
-
 function startGame() {
     $(".game-timer .title").text("Go!")
     $(".game-view").addClass('started')
@@ -67,9 +49,7 @@ function startGame() {
     }, 1000);
 }
 
-function startRace() {
-
-    socket.emit("game", { user_id: user_id, name: name, type: "game", avatar: avatar });
+function startRace(is_practice = false) {
 
     const rand_num = Math.floor(Math.random() * 10)
     text = texts[rand_num]
@@ -87,34 +67,36 @@ function startRace() {
     $(".game-timer .title").text("The race is about to start!")
     $(".game-input-panel").show()
     $(".game-timer").show()
-    $(".time-display").text("0:05")
+    $(".time-display").text(is_practice ? "0:05" : "0:10")
 
-    const trafficlight_src = "/assets/trafficlight.png"
     const $starter_preloader = $(`<div class="contents">
-        <img class="trafficlight" src="/assets/clear.cache.gif" style="width: 165px; height: 65px; background: url('${trafficlight_src}') -165px 0px no-repeat;">
+        <img class="trafficlight" src="/assets/clear.cache.gif" style="width: 165px; height: 65px;">
         <div class="timer-text">
             <div>Get Ready to Race!</div>
-            <div class="timer">0:05</div>
+            <div class="timer">0:${is_practice ? "05" : "10"}</div>
         </div>
     </div>`)
     const $trafficlight = $starter_preloader.find(".trafficlight")
     const $timer = $starter_preloader.find(".timer")
     $(".game-starter-timer").html($starter_preloader)
 
+    $(".join-game").hide()
+    $(".game-view").show()
+    $(".game-view .leave-race-btn").show()
+    $(".game-view .start-race-btn").hide()
 
-    $(".leave-race-btn").show()
-    $(".start-race-btn").hide()
-
-    var time_left = 5
-    var total_time = 5
+    var time_left = is_practice ? 5 : 10
+    var yel_time = is_practice ? 3 : 5
+    var gel_time = is_practice ? 2 : 3
     interval = setInterval(() => {
         time_left--
-        if(total_time - time_left <= total_time / 2){
-            $trafficlight.css("background", `url('${trafficlight_src}') 0px 0px no-repeat;`)
+        if(time_left <= yel_time){
+            $trafficlight.addClass("yellow-light")
         }
-        if(time_left < 3){
-            $trafficlight.css("background", `url('${trafficlight_src}') -495px 0px no-repeat;`)
+        if(time_left < gel_time){
+            $trafficlight.removeClass("yellow-light").addClass("green-light")
         }
+        
         if(time_left === 0){
             clearInterval(interval)
             startGame()
@@ -125,17 +107,29 @@ function startRace() {
     updateText()
 }
 
+function startPractice(){
+    startRace(true)
+}
+
+function joinGame() {
+    socket.emit("game", { user_id: user_id, name: username, type: "game", avatar: user_vehicle });
+}
+
 function endRace (){
     game_started = false
     clearInterval(interval)
     $(".game-timer .title").text("The race has ended.")
     $(".game-starter-timer").html("")
-    $(".leave-race-btn").hide()
-    $(".start-race-btn").show()
+    $(".game-view .start-race-btn").show()
     $(".text-input").val("").prop("disabled", true)
     $(".game-input-panel").hide()
     $(".time-display").text("")
     $(".game-view").removeClass('started')
+}
+function leaveGame(){
+    endRace()
+    $(".join-game").show()
+    $(".game-view").hide()
 }
 
 function getRightWrong(typed, original){
