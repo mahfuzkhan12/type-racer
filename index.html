@@ -94,28 +94,7 @@
 
                 <div class="game-starter-timer"></div>
 
-                <div class="result">
-                    <div class="result-contents">
-                        <div class="result-progress">
-                            <div class="vehicle-container">
-                                <!-- <div class="name-container">
-                                    <div class="name" style="white-space: nowrap;">Mahfuz</div>
-                                    <span class="username">(you)</span>
-                                </div> -->
-                                <!-- <div class="avatar-container" style="background-image: url(&quot;https://data.typeracer.com/public/images/avatars/basic-orange.svg&quot;);"></div> -->
-                                <!-- <div class="avatar-container" style="background-image: url('https://data.typeracer.com/public/images/avatars/spring-cherryblossom-free.svg')"></div> -->
-                                <!-- <div class="avatar-container" style="background-image: url('https://data.typeracer.com/public/images/avatars/spring-cherryblossom-drag.svg')"></div> -->
-                            </div>
-                        </div>
-                        <div class="wpm">0 wpm</div>
-                    </div>
-                    <!-- <div class="result-contents">
-                        <div class="result-progress">
-                            <div class="vehicle-container">
-                            </div>
-                        </div>
-                        <div class="wpm">0 wpm</div>
-                    </div> -->
+                <div class="result game-result">
                 </div>
 
                 <div class="input-panel game-input-panel" style="display: none;">
@@ -139,7 +118,7 @@
                         <button onclick="leaveGame()" class="leave-race-btn" style="display: none;">Main Menu(Leave Race)</button>
                     </div>
                     <div class="">
-                        <button onclick="startRace()" class="start-race-btn">Join Race</button>
+                        <button onclick="startRace(false, true, true)" class="start-race-btn">Join Race</button>
                     </div>
                 </div>
 

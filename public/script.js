@@ -13,7 +13,8 @@ var texts = [
 
 var text;
 var text_arr = [];
-var completed = ""
+var text_index = false
+var completed = false
 var remaining = text
 var writting;
 
@@ -26,7 +27,10 @@ var interval;
 var total_time = 90
 var time_left = 90
 var game_started = false
+var game_initiated = false
+var multiplayer = false
 
+var car_container, car_container_width, car_width;
 
 function startGame() {
     $(".game-timer .title").text("Go!")
@@ -34,6 +38,10 @@ function startGame() {
     $(".text-input").prop("disabled", false).val("").change().focus()
     $(".game-starter-timer").html("")
     game_started = true
+
+    car_container = $("#"+user_id+" .result-progress")
+    car_container_width = car_container.width()
+    car_width = $("#"+user_id+" .vehicle-container").width()
 
     $(".time-display").text(1 + ":" + 30);
     time_left = total_time
@@ -44,19 +52,32 @@ function startGame() {
         var secondsDisplay = (seconds < 10) ? "0" + seconds : seconds;
         if(time_left == 0){
             endRace()
+        }else {
+            if(!completed){
+                var wpm = 0
+                if(game_started){
+                    const words_typed = index+1
+                    const time_gone_minutes = (total_time - time_left) / 60
+                    wpm = Math.ceil(words_typed / time_gone_minutes)
+                }
+                updateProgress(index + 1, wpm, user_id)
+                socket.emit("game_progress", {user_id: user_id, percent: index + 1, wpm: wpm});
+            }
         }
         $(".time-display").text(minutes + ":" + secondsDisplay);
     }, 1000);
 }
 
-function startRace(is_practice = false) {
+function startRace(is_practice = false, init = false, game_start = false) {
 
-    const rand_num = Math.floor(Math.random() * 10)
-    text = texts[rand_num]
-    text_arr = text.split(" ")
+    if(!init){
+        const rand_num = Math.floor(Math.random() * 10)
+        text = texts[rand_num]
+        text_arr = text.split(" ")
+    }
 
+    completed = false
     game_started = false
-    completed = ""
     remaining = text
     writting = text_arr[0]
 
@@ -64,8 +85,14 @@ function startRace(is_practice = false) {
     index = -1
     currently_writting = ""
 
-    $(".game-timer .title").text("The race is about to start!")
+    $(".game-timer .title").text(init ? "Waiting for others to join" : "The race is about to start!")
     $(".game-input-panel").show()
+    $(".game-view .leave-race-btn").show()
+    $(".game-view .start-race-btn").hide()
+    if(init && !game_start){
+        return;
+    }
+
     $(".game-timer").show()
     $(".time-display").text(is_practice ? "0:05" : "0:10")
 
@@ -82,8 +109,11 @@ function startRace(is_practice = false) {
 
     $(".join-game").hide()
     $(".game-view").show()
-    $(".game-view .leave-race-btn").show()
-    $(".game-view .start-race-btn").hide()
+
+    if(multiplayer && !multiplayer_started){
+        multiplayer_started = true
+        socket.emit("game_started", {type: "game_started"});
+    }
 
     var time_left = is_practice ? 5 : 10
     var yel_time = is_practice ? 3 : 5
@@ -111,8 +141,60 @@ function startPractice(){
     startRace(true)
 }
 
+function userJoined(user) {
+    console.log($(".user_id#"+user?.user_id), user);
+    if($(".user_id#"+user?.user_id).length < 1){
+        $(".game-result").append(`
+            <div class="user_id" id="${user?.user_id}">
+                <div class="result-contents">
+                    <div class="result-progress">
+                        <div class="vehicle-container">
+                            <div class="name-container">
+                                <div class="name" style="white-space: nowrap;">${user?.name}</div>
+                                <span class="username"></span>
+                            </div>
+                            <div class="avatar-container" style="background-image: url(${user?.avatar})"></div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="place"></div>
+                        <div class="wpm">0 wpm</div>
+                    </div>
+                </div>
+            </div>
+        `)
+    }
+    if(players.length === 0){
+        $(".start-race-btn").prop("disabled", true)
+    }else {
+        $(".start-race-btn").prop("disabled", false).show()
+        $(".game-timer .title").html("Click <b style='color:#3cc1a3'>Join Race</b> button to start the game")
+    }
+}
+
 function joinGame() {
-    socket.emit("game", { user_id: user_id, name: username, type: "game", avatar: user_vehicle });
+    console.log(text_arr, players);
+    $(".join-game").hide()
+    $(".game-view").show()
+    $(".game-input-panel").show()
+    $(".game-timer").show()
+    $(".game-timer .title").text("Waiting for others to join")
+    var rand_num = Math.floor(Math.random() * 10)
+    if(players.length === 0){
+        game_initiated = true
+        $(".start-race-btn").prop("disabled", true)
+    }else {
+        rand_num = players[0]?.text_idx
+        game_initiated = true
+        $(".start-race-btn").prop("disabled", false).show()
+    }        
+    console.log(text_index);
+    text = texts[rand_num]
+    text_arr = text.split(" ")
+    startRace(false, true)
+    updateText()
+    multiplayer = true
+    socket.emit("game", { user_id: user_id, game_text: rand_num, user: {name: username, user_id: user_id, avatar: user_vehicle, text_idx: rand_num}, name: username, type: "join", avatar: user_vehicle });
 }
 
 function endRace (){
@@ -244,7 +326,10 @@ function updateText(pad_width, with_errors = false) {
         }else {
             green_text.push(cur_text)
             if(!text_arr[index+2]){
-                endRace()
+                completed = true
+                if(!multiplayer){
+                    endRace()
+                }
             }
         }
     }
@@ -259,15 +344,35 @@ function updateText(pad_width, with_errors = false) {
     const $textContainer = $(".text-container")
     $textContainer.html($updated_text.html())
 
+    var percent = pad_width * (index + 1)
+    var wpm = 0
     if(game_started){
         const words_typed = index+1
         const time_gone_minutes = (total_time - time_left) / 60
-        $(".wpm").text(Math.ceil(words_typed / time_gone_minutes) + " wpm")
+        percent = pad_width * (index + 1)
+        wpm = Math.ceil(words_typed / time_gone_minutes)
+        console.log(percent, pad_width);
+        // updateProgressPract(percent, wpm, user_id)
+    }else {
+        updateProgressPract(0, 0, user_id)
     }
-    
-
+    // socket.emit("game_progress", {user_id: user_id, percent: percent, wpm: wpm});
+}
+function updateProgressPract(percent, wpm, user_id){
     const car_container = $(".result-progress")
-    car_container.css("padding-left", pad_width * (index + 1))
+    $("#"+user_id+" .wpm").text(wpm + " wpm")
+    car_container.css("padding-left", percent)
+}
+
+function updateProgress(percent, wpm, user_id){
+    const car_container = $("#"+user_id+" .result-progress")
+    // const car_container_width = car_container.width()
+    // const car_width = $(".vehicle-container").width()
+    pad_width = (car_container_width - car_width) / text_arr.length
+
+    console.log(((percent+1) * pad_width));
+    $("#"+user_id+" .wpm").text(wpm + " wpm")
+    car_container.css("padding-left", ((percent+1) * pad_width))
 }
 
 
@@ -306,20 +411,31 @@ function checkErrors(values) {
 // text.substring(3, 6); to get indexed texts
 $(document).ready(function() {
 
-    $(".vehicle-container").html(`
-        <div class="name-container">
-            <div class="name" style="white-space: nowrap;">User</div>
-            <span class="username">(you)</span>
-        </div>
-        <div class="avatar-container" style="background-image: url(${avatar})"></div>
-    `)
+    if($(".user_id#"+user_id).length < 1){
+        $(".game-result").append(`
+            <div class="user_id" id="${user_id}">
+                <div class="result-contents">
+                    <div class="result-progress">
+                        <div class="vehicle-container">
+                            <div class="name-container">
+                                <div class="name" style="white-space: nowrap;">${username}</div>
+                                <span class="username">(you)</span>
+                            </div>
+                            <div class="avatar-container" style="background-image: url(${user_vehicle})"></div>
+                        </div>
+                    </div>
+                    <div class="res_place_wpm">
+                        <div class="place">1st Place!</div>
+                        <div class="wpm">0 wpm</div>
+                    </div>
+                </div>
+            </div>
+        `)
+    }
 
     const $textContainer = $(".text-container")
     $textContainer.html(`<span>${text}</span>`)
 
-    const car_container = $(".result-progress")
-    const car_container_width = car_container.width()
-    const car_width = $(".vehicle-container").width()
     var pad_width = 0
 
     updateText(pad_width)

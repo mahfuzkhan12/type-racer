@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,700;1,100;1,300;1,400;1,700;1,900&family=Open+Sans:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+/* @import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,700;1,100;1,300;1,400;1,700;1,900&family=Open+Sans:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;1,100;1,300;1,400;1,500;1,700;1,900&display=swap'); */
 
 
 /* global */
@@ -31,11 +31,15 @@ img {
 .gap-1 {
     gap: 5px;
 }
+button:disabled{
+    opacity: .4;
+    cursor: not-allowed!important;
+}
 /* global */
 
 
 
-.main-card {
+.main-card { 
     padding: 15px;
     border-radius: 1.25rem;
     background-color: #fff;
@@ -152,7 +156,7 @@ img {
     display: grid;
     grid-template-columns: calc(90% - 10px) 10%;
     gap: 10px;
-    align-items: baseline;
+    align-items: center;
     font-weight: bold;
 }
 .result-contents .result-progress {
@@ -192,7 +196,15 @@ img {
 .result-progress .name-container .username {
     margin-right: 5px;
 }
-
+.res_place_wpm {
+    color: #638e8e;
+    color: #638e8e;
+    display: grid;
+    justify-content: end;
+}
+.res_place_wpm .place {
+    font-weight: normal;
+}
 
 /* input part */
 .input-panel {

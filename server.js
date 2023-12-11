@@ -19,6 +19,12 @@ io.on('connection', (socket) => {
         console.log('From client: ', message)
         io.emit('game', message)
     })
+    socket.on('game_progress', message => {
+        io.emit('game_progress', message)
+    })
+    socket.on('game_started', message => {
+        io.emit('game_started', message)
+    })
 })
 
 

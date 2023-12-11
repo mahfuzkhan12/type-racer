@@ -29,7 +29,7 @@ var rand_names = [
 
 var user_id = randomIDGen()
 var user_vehicle = "veh_avatars/cars/desing-car-blue.svg"
-var username = rand_names[Math.floor(Math.random() * 16)]
+var username = rand_names[Math.floor(Math.random() * 15)]
 
 $(document).ready(function() {
     $(".username").text(username)
