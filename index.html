@@ -76,7 +76,7 @@
                 </div>
                 <div class="action-buttons">
                     <div class="">
-                        <button onclick="joinGame()">Create RaceTrack</button>
+                        <button onclick="createRaceTrack()">Create RaceTrack</button>
                     </div>
                 </div>
             </div>
@@ -118,7 +118,7 @@
                         <button onclick="leaveGame()" class="leave-race-btn" style="display: none;">Main Menu(Leave Race)</button>
                     </div>
                     <div class="">
-                        <button onclick="startRace(false, true, true)" class="start-race-btn">Join Race</button>
+                        <button onclick="joinGame(false, true, true)" class="start-race-btn">Join Race</button>
                     </div>
                 </div>
 
@@ -128,6 +128,7 @@
     </div>
 
 
+    <script src="js/playersManager.js"></script>
     <script src="/socket.io/socket.io.js"></script>
     <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
     <script src="js/user_info.js"></script>

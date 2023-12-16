@@ -17,6 +17,7 @@ var text_index = false
 var completed = false
 var remaining = text
 var writting;
+var game_id = false
 
 var written = ""
 var index = -1
@@ -61,7 +62,9 @@ function startGame() {
                     wpm = Math.ceil(words_typed / time_gone_minutes)
                 }
                 updateProgress(index + 1, wpm, user_id)
-                socket.emit("game_progress", {user_id: user_id, percent: index + 1, wpm: wpm});
+                if(multiplayer){
+                    socket.emit("game_progress", {user_id: user_id, percent: index + 1, wpm: wpm});
+                }
             }
         }
         $(".time-display").text(minutes + ":" + secondsDisplay);
@@ -180,21 +183,38 @@ function joinGame() {
     $(".game-timer").show()
     $(".game-timer .title").text("Waiting for others to join")
     var rand_num = Math.floor(Math.random() * 10)
-    if(players.length === 0){
-        game_initiated = true
-        $(".start-race-btn").prop("disabled", true)
-    }else {
-        rand_num = players[0]?.text_idx
-        game_initiated = true
-        $(".start-race-btn").prop("disabled", false).show()
-    }        
-    console.log(text_index);
+    // if(players.length === 0){
+    //     game_initiated = true
+    //     $(".start-race-btn").prop("disabled", true)
+    // }else {
+    //     rand_num = players[0]?.text_idx
+    //     game_initiated = true
+    //     $(".start-race-btn").prop("disabled", false).show()
+    // }        
+    // console.log(text_index);
     text = texts[rand_num]
     text_arr = text.split(" ")
     startRace(false, true)
     updateText()
     multiplayer = true
-    socket.emit("game", { user_id: user_id, game_text: rand_num, user: {name: username, user_id: user_id, avatar: user_vehicle, text_idx: rand_num}, name: username, type: "join", avatar: user_vehicle });
+    // socket.emit("game", { user_id: user_id, user: {name: username, user_id: user_id, avatar: user_vehicle, text_idx: rand_num}, type: "join" });
+}
+
+function gameJoinDom() {
+    $(".join-game").hide()
+    $(".game-view").show()
+    $(".game-timer").show()
+    $(".game-timer .title").text("Join this race, whenever you're ready...")
+}
+
+function createRaceTrack() {
+    startSocket()
+    gameJoinDom()
+    socket.emit('create_race', user, (data) => {
+        document.title = data.game_name
+        history.pushState({}, data.game_name, "/"+data.game_id);
+        console.log(data);
+    });
 }
 
 function endRace (){
@@ -212,6 +232,10 @@ function leaveGame(){
     endRace()
     $(".join-game").show()
     $(".game-view").hide()
+    game_id = false
+    if(multiplayer){
+        socket.disconnect(user_id);
+    }
 }
 
 function getRightWrong(typed, original){
@@ -351,7 +375,6 @@ function updateText(pad_width, with_errors = false) {
         const time_gone_minutes = (total_time - time_left) / 60
         percent = pad_width * (index + 1)
         wpm = Math.ceil(words_typed / time_gone_minutes)
-        console.log(percent, pad_width);
         // updateProgressPract(percent, wpm, user_id)
     }else {
         updateProgressPract(0, 0, user_id)
@@ -370,7 +393,6 @@ function updateProgress(percent, wpm, user_id){
     // const car_width = $(".vehicle-container").width()
     pad_width = (car_container_width - car_width) / text_arr.length
 
-    console.log(((percent+1) * pad_width));
     $("#"+user_id+" .wpm").text(wpm + " wpm")
     car_container.css("padding-left", ((percent+1) * pad_width))
 }
