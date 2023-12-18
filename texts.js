@@ -1,0 +1,14 @@
+const texts = [
+    "I'm so glad you came, I'm so glad you remembered, to see how we're ending our last dance together. Expectant, too punctual, but prettier than ever, I really believe that this time it's forever.",
+    "Well I woke in mid-afternoon 'cause that's when it all hurts the most. I dream I never know anyone at the party and I'm always the host. If dreams are like movies, then memories are films about ghosts. You can never escape, you can only move south down the coast.",
+    "It was rough around the edges. He'd been to school, but never finished. He'd been to jail, but never prison. And it was his first day off in forever, man. The festival seemed like a pretty good plan: cruise some chicks and get a suntan. And his friend gave him four, but said only take one. But then he got bored and he ended up taking all four, so now my man ain't that bored anyways. The paramedics found him, he was shaking on the side of the stage.",
+    "We rendezvous with Rochambeau, consolidate their gifts. We can end this war at Yorktown, cut them off at sea; but for this to succeed, there is someone else we need.",
+    "It is not hard to make money in the market. What is hard to avoid is the alluring temptation to throw your money away on short, get-rich-quick speculative binges. It is an obvious lesson, but one frequently ignored.",
+    `I always make offers with escape clauses. In real estate, I make an offer with language that details "subject-to" contingencies, such as the approval of a business partner. Never specify who the business partner is. Most people don't know that my partner is my cat.`,
+    `Music finds a comfortable parallel with that of human language. Much as language has words, sentences, and stories, music has tones, melodies, and songs.`,
+    `And I don't believe in the existence of angels but looking at you I wonder if that's true. But if I did I would summon them together, and ask them to watch over you. To each burn a candle for you, to make bright and clear your path. And to walk, like Christ, in grace and love and guide you into my arms.`,
+    `Stab a sorry heart with your favorite finger. Paint the whole world blue and stop your tears from stinging. Hear the cavemen singing. Good news they're bringing. Seven seas, swimming them so well. Glad to see my face among them kissing the tortoise shell.`,
+    `They typically had very rosy views about their own futures, which they imagined to include successful careers, happy marriages, and good health. When asked to speculate about their roommates' futures, however, their responses were far more realistic.`
+]
+
+module.exports = texts

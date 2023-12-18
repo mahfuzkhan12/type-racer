@@ -176,27 +176,43 @@ function userJoined(user) {
 }
 
 function joinGame() {
-    console.log(text_arr, players);
-    $(".join-game").hide()
-    $(".game-view").show()
-    $(".game-input-panel").show()
-    $(".game-timer").show()
-    $(".game-timer .title").text("Waiting for others to join")
-    var rand_num = Math.floor(Math.random() * 10)
-    // if(players.length === 0){
-    //     game_initiated = true
-    //     $(".start-race-btn").prop("disabled", true)
-    // }else {
-    //     rand_num = players[0]?.text_idx
-    //     game_initiated = true
-    //     $(".start-race-btn").prop("disabled", false).show()
-    // }        
-    // console.log(text_index);
-    text = texts[rand_num]
-    text_arr = text.split(" ")
-    startRace(false, true)
-    updateText()
+
+    gameJoinDom()
     multiplayer = true
+    socket.emit('game_join', user, gameId, (data) => {
+        $(".join-game").hide()
+        $(".game-view").show()
+        $(".game-input-panel").show()
+        $(".game-timer").show()
+    
+        $(".game-timer .title").text("Match is about to start")
+        text = data?.text
+        text_arr = text.split(" ")
+        startRace(false, true)
+        updateText()
+    });
+
+    // $(".join-game").hide()
+    // $(".game-view").show()
+    // $(".game-input-panel").show()
+    // $(".game-timer").show()
+
+    // $(".game-timer .title").text("Waiting for others to join")
+    // // var rand_num = Math.floor(Math.random() * 10)
+    // // if(players.length === 0){
+    // //     game_initiated = true
+    // //     $(".start-race-btn").prop("disabled", true)
+    // // }else {
+    // //     rand_num = players[0]?.text_idx
+    // //     game_initiated = true
+    // //     $(".start-race-btn").prop("disabled", false).show()
+    // // }        
+    // // console.log(text_index);
+    // text = texts[rand_num]
+    // text_arr = text.split(" ")
+    // startRace(false, true)
+    // updateText()
+    // multiplayer = true
     // socket.emit("game", { user_id: user_id, user: {name: username, user_id: user_id, avatar: user_vehicle, text_idx: rand_num}, type: "join" });
 }
 
@@ -208,9 +224,11 @@ function gameJoinDom() {
 }
 
 function createRaceTrack() {
+    $(".game-title").show().text("Yours Game....")
     startSocket()
     gameJoinDom()
     socket.emit('create_race', user, (data) => {
+        gameId = data.game_id
         document.title = data.game_name
         history.pushState({}, data.game_name, "/"+data.game_id);
         console.log(data);

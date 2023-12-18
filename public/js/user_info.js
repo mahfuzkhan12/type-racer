@@ -31,6 +31,7 @@ var user_id = randomIDGen()
 var user_vehicle = "veh_avatars/cars/desing-car-blue.svg"
 var username = rand_names[Math.floor(Math.random() * 15)]
 var user = {name: username, user_id: user_id, avatar: user_vehicle}
+var gameId = false
 $(document).ready(function() {
     $(".username").text(username)
     $(".user_vehicle").attr("src", user_vehicle)
@@ -39,14 +40,16 @@ $(document).ready(function() {
     }, 400);
 
 
-    const gameId = window.location.pathname.split('/')[1];
-    console.log(gameId);
+    gameId = window.location.pathname.split('/')[1];
     if(gameId){
         startSocket()
         socket.emit('join', user, gameId, (data) => {
             if(data?.game){
                 if(data?.game_info?.game_name){
                     document.title = data?.game_info?.game_name
+                    $(".game-title").show().text(data?.game_info?.game_name)
+                }else {
+                    $(".game-title").show().text("")
                 }
                 gameJoinDom()
             }
