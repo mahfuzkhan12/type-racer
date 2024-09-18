@@ -1,0 +1,69 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; connect-src 'self' http://192.168.0.132:8010/;">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; connect-src 'self' http://192.168.0.132:8010/ ws://192.168.0.132:8010/;">
+
+
+
+
+
+    <link rel="stylesheet" href="chat.css">
+
+  </head>
+  <body>
+    
+    <div class="join">
+        <div>
+            <h3>ZeptoChat</h3>
+        </div>
+        <div class="">
+            <label for="">Enter your name</label>
+            <input id="username" maxlength="30" />
+        </div>
+        <div>
+            <label>Choose Avatar</label>
+            <div class="avatars"></div>
+        </div>
+        <div class="join_chat_wrapper">
+            <button id="join_chat">Join ZeptoChat</button>
+        </div>
+    </div>
+    
+    <section class="msger hide">
+      <header class="msger-header">
+        <div class="msger-header-title">
+          <i class="fas fa-comment-alt"></i> ZeptoChat
+        </div>
+        <div class="msger-header-options">
+          <span><i class="fas fa-cog"></i></span>
+        </div>
+      </header>
+
+      <main class="msger-chat">
+        <div class="welcome">Welcome to ZeptoChat</div>
+      </main>
+
+      <div class="msger-inputarea">
+        <input
+          type="text"
+          class="msger-input"
+          placeholder="Enter your message..."
+        />
+        <button type="button" class="msger-send-btn">Send</button>
+      </div>
+    </section>
+
+
+
+    <script src="jquery.min.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="chat.js"></script>
+
+  </body>
+</html>
