@@ -135,7 +135,7 @@ const appendMessage = (message, this_user) => {
 
 
 function startSocket() {
-    socket = io.connect("http://192.168.0.132:8010/");
+    socket = io.connect("http://127.0.0.1:8010/");
 
     socket.on('join', function(response) {
         console.log(response);
