@@ -1,20 +1,18 @@
-```markdown
-# Running Your Game from Visual Studio Code
+# Running Your Game from Visual Studio Code  
 
-## 1. Install Node.js
-Make sure you have Node.js installed on your machine. You can download it from [nodejs.org](https://nodejs.org/).
+## 1. Install Node.js  
+Make sure you have Node.js installed on your machine. You can download it from [nodejs.org](https://nodejs.org/).  
 
-## 2. Open the Terminal
-In Visual Studio Code, open the integrated terminal:
+## 2. Open the Terminal  
+In Visual Studio Code, open the integrated terminal:  
 
-- You can do this by going to the menu and selecting **Terminal > New Terminal** or by using the shortcut `` Ctrl + ` ``.
+- You can do this by going to the menu and selecting **Terminal > New Terminal** or by using the shortcut `` Ctrl + ` ``.  
 
-## 3. Navigate to the Project Directory
-Ensure you are in the root directory of your cloned repository. You can use the `cd` command to navigate:
+## 3. Navigate to the Project Directory  
+Ensure you are in the root directory of your cloned repository. You can use the `cd` command to navigate:  
 
-```bash
+```bash  
 cd path/to/your/cloned/repository
-```
 
 ## 4. Install Dependencies
 If the project has a `package.json` file, you need to install the required dependencies. Run:
