@@ -49,9 +49,3 @@ After starting the server, open your web browser and navigate to the address whe
 
 ## 8. Debugging
 If you encounter any further errors, check the terminal output for messages and ensure all required modules are installed. You can also check the `package.json` file for any scripts or additional setup instructions.
-
-## Summary
-By following these steps, you should be able to run the game locally from Visual Studio Code. If you encounter any specific issues, feel free to ask for further assistance!
-```
-
-You can copy this Markdown code into a `.md` file (e.g., `README.md`) to create a formatted document that can be easily viewed on GitHub or in a Markdown viewer.
