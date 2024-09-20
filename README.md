@@ -1,5 +1,3 @@
-Sure! Here's the text converted into Markdown format:
-
 ```markdown
 # Running Your Game from Visual Studio Code
 
