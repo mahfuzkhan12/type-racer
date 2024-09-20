@@ -1,4 +1,4 @@
-# Running Your Game from Visual Studio Code  
+# Running Your Game
 
 ## 1. Install Node.js  
 Make sure you have Node.js installed on your machine. You can download it from [nodejs.org](https://nodejs.org/).  
