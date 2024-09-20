@@ -13,6 +13,7 @@ Ensure you are in the root directory of your cloned repository. You can use the 
 
 ```bash  
 cd path/to/your/cloned/repository
+```
 
 ## 4. Install Dependencies
 If the project has a `package.json` file, you need to install the required dependencies. Run:
