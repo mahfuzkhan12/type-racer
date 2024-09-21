@@ -16,7 +16,7 @@ cd path/to/your/cloned/repository
 ```
 
 ## 4. Install Dependencies
-If the project has a `package.json` file, you need to install the required dependencies. Run:
+The project has a `package.json` file, you need to install the required dependencies. Run:
 
 ```bash
 npm install
@@ -32,20 +32,20 @@ npm install express
 ```
 
 ## 6. Start the Server
-Once all dependencies are installed, you can start the server. If the entry point is `server.js`, run:
+Once all dependencies are installed, you can start the server. From the entry point `server.js`, run:
 
 ```bash
 node server.js
 ```
 
-If there is a specific script defined in `package.json` (like `start`), you can run:
+For a specific script defined in `package.json` (like `start`), you can run:
 
 ```bash
 npm start
 ```
 
 ## 7. Access the Game
-After starting the server, open your web browser and navigate to the address where the server is running, typically `http://localhost:3000` or `http://localhost:5000`, depending on your server configuration.
+After starting the server, open your web browser and navigate to the address where the server is running, typically `http://localhost:8000`, depending on your server configuration.
 
 ## 8. Debugging
 If you encounter any further errors, check the terminal output for messages and ensure all required modules are installed. You can also check the `package.json` file for any scripts or additional setup instructions.
